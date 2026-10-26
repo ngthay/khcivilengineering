@@ -3,118 +3,120 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Engineering Formula</title>
+  <title>KhmerCivilEngineer</title>
 
-  <!-- Step 3: font (free from Google Fonts) -->
+  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    /* Step 4: basic page setup */
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Noto Sans", Arial, sans-serif;
-      background: #ffffff;
-      color: #333;
-    }
-
-    /* Step 5: centered column */
-    .container {
-      width: 280px;
-      margin: 40px auto;
-      text-align: center;
-    }
-    h1 {
-      font-family: Arial, sans-serif;
-      font-size: 24px;
-      margin: 0 0 20px;
-    }
-
-    /* Step 6: buttons */
-    .btn {
-      display: block;
-      padding: 11px 0;
-      margin-bottom: 8px;
-      border-radius: 5px;
-      color: #fff;
-      font-weight: 700;
-      font-size: 16px;
-      text-decoration: none;
-      transition: filter .15s, transform .05s;
-    }
-    .btn:hover  { filter: brightness(1.12); }
-    .btn:active { transform: translateY(1px); }
-
-    .green  { background: #2fa050; }
-    .blue   { background: #1565d8; }
-    .orange { background: #e07b00; }
-
-    hr {
-      border: 0;
-      border-top: 2px solid #d5d5d5;
-      margin: 14px 0;
-    }
-
-    /* Step 7: footer with 3 logos */
-    .footer {
-      display: flex;
-      justify-content: center;
-      gap: 28px;
-      margin-top: 18px;
-      font-size: 14px;
-      color: #555;
-    }
-    .footer a { color: inherit; text-decoration: none; }
-    .footer .label { display: block; }
-    .footer .name  { display: block; font-weight: 700; color: #222; }
-    .footer img {
-      width: 40px; height: 40px;
-      margin-top: 6px;
-      object-fit: contain;
-    }
-  </style>
+  <!-- Styles: variables first, because the other files use them -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/widgets.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Engineering Formula</h1>
+  <div class="app">
 
-    <!-- Group 1: green -->
-    <a class="btn green" href="dynamics.html">Dynamics</a>
-    <a class="btn green" href="mechanics.html">Mechanics</a>
+    <!-- ===== Left sidebar ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true">
+          <rect width="28" height="4" rx="2"/><rect y="9" width="22" height="4" rx="2"/><rect y="18" width="28" height="4" rx="2"/>
+        </svg>
+        KCE
+      </div>
+      <!-- Menu links are built from js/data.js -->
+      <nav class="nav" id="nav"></nav>
+    </aside>
 
-    <hr>
+    <!-- ===== Main content ===== -->
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+        <label class="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+          </svg>
+          <input type="search" id="search" placeholder="Search..." aria-label="Search subjects">
+        </label>
+        <div class="top-actions">
+          <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+            </svg>
+          </button>
+          <button class="icon-btn" aria-label="Notifications">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>
+            </svg>
+          </button>
+          <div class="avatar" aria-hidden="true">E</div>
+        </div>
+      </header>
 
-    <!-- Group 2: blue -->
-    <a class="btn blue" href="design.html">Design</a>
-    <a class="btn blue" href="concrete.html">Concrete</a>
-    <a class="btn blue" href="steel.html">Steel</a>
-    <a class="btn blue" href="geo.html">Geo (Ground)</a>
+      <!-- Hero banner -->
+      <section class="hero">
+        <!-- Left illustration: stacked books + glasses -->
+        <svg viewBox="0 0 200 150" aria-hidden="true">
+          <g fill="none" stroke="#f4b23a" stroke-width="5">
+            <circle cx="62" cy="28" r="15"/><circle cx="104" cy="28" r="15"/><path d="M77 28q6-6 12 0"/>
+          </g>
+          <rect x="40" y="48" width="96" height="22" rx="5" fill="#35b37e"/><rect x="96" y="53" width="36" height="12" rx="2" fill="#fff"/>
+          <rect x="22" y="72" width="130" height="28" rx="6" fill="#8a5cf0"/><rect x="100" y="78" width="48" height="16" rx="2" fill="#fff"/>
+          <rect x="30" y="102" width="126" height="30" rx="6" fill="#f0603a"/><rect x="40" y="108" width="110" height="18" rx="2" fill="#fff"/>
+        </svg>
 
-    <hr>
+        <div class="hero-text">
+          <h1>Hi, Engineer</h1>
+          <p>A library of formulas for civil engineers, from dynamics and mechanics to concrete, steel, geotechnics and coding.</p>
+          <a class="btn-ghost" href="#subjects">Learn more</a>
+        </div>
 
-    <!-- Group 3: orange -->
-    <a class="btn orange" href="ai.html">AI (Artificial Intelligence)</a>
-    <a class="btn orange" href="python.html">Python</a>
+        <!-- Right illustration: book shelf -->
+        <svg viewBox="0 0 200 150" aria-hidden="true">
+          <rect x="10" y="64" width="62" height="14" rx="3" fill="#5ec5a0"/><rect x="40" y="67" width="28" height="8" fill="#fff"/>
+          <rect x="6" y="80" width="68" height="16" rx="3" fill="#a07af5"/><rect x="40" y="83" width="30" height="10" fill="#fff"/>
+          <rect x="94" y="22" width="20" height="76" rx="3" fill="#f2a03d"/><rect x="98" y="30" width="12" height="6" fill="#fff"/>
+          <rect x="116" y="8" width="24" height="90" rx="3" fill="#8a5cf0"/><rect x="120" y="16" width="16" height="6" fill="#fff"/>
+          <rect x="142" y="14" width="22" height="84" rx="3" fill="#b18cff"/><rect x="146" y="22" width="14" height="6" fill="#fff"/>
+          <rect x="0" y="98" width="196" height="18" rx="5" fill="#f6a83a"/>
+          <path d="M40 116h18v20q0 8-9 8t-9-8z" fill="#e58b1f"/>
+          <path d="M140 116h18v20q0 8-9 8t-9-8z" fill="#e58b1f"/>
+        </svg>
+      </section>
 
-    <!-- Footer: replace the logo files with your own images -->
-    <div class="footer">
-      <a href="https://example.com" target="_blank">
-        <span class="label">University</span>
-        <span class="name">laboratory</span>
-        <img src="logo-lab.png" alt="Lab logo">
-      </a>
-      <a href="https://youtube.com" target="_blank">
-        <span class="label">YouTube</span>
-        <span class="name">youtube</span>
-        <img src="logo-youtube.png" alt="YouTube logo">
-      </a>
-      <a href="https://example.com" target="_blank">
-        <span class="label">Industry</span>
-        <span class="name">Your Company Co., Ltd.</span>
-        <img src="logo-company.png" alt="Company logo">
-      </a>
-    </div>
+      <div class="content">
+        <!-- Subject cards: sections are built from js/data.js -->
+        <div class="panel" id="subjects">
+          <div id="sections"></div>
+          <p class="empty" id="empty">No subjects match your search.</p>
+        </div>
+
+        <!-- ===== Right sidebar (widgets) ===== -->
+        <div class="aside">
+          <div class="panel">
+            <div class="widget-head">
+              <h2>Study progress</h2>
+              <button class="toggle" id="progressToggle" aria-pressed="true" aria-label="Show progress"></button>
+            </div>
+            <p class="sub">Open each subject to complete it!</p>
+            <!-- One bar per section, built from js/data.js -->
+            <div id="progressBody"></div>
+          </div>
+
+          <div class="panel">
+            <h2>Quick Links</h2>
+            <!-- Built from js/data.js -->
+            <div id="links"></div>
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
+
+  <!-- Scripts: data first, then the code that uses it -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

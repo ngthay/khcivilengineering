@@ -1,0 +1,95 @@
+/* =========================================================
+   variables.css
+   Design tokens (colors, type, spacing) + base element styles.
+   Every other CSS file reads these variables, so change a
+   color here and it updates across the whole site.
+   ========================================================= */
+
+/* ---------- Light theme (default) ---------- */
+:root {
+  /* Surfaces */
+  --bg: #f6f5fd;          /* page background            */
+  --panel: #ffffff;       /* cards, sidebar, widgets    */
+  --panel-soft: #f6f5fd;  /* inner boxes inside panels  */
+  --line: #ecebf5;        /* borders, empty bar track   */
+
+  /* Text */
+  --text: #1d1d2b;
+  --muted: #7a7a8c;
+
+  /* Accents */
+  --accent: #5b5bd6;
+  --accent-2: #7b6cf0;
+  --accent-soft: rgba(91, 91, 214, .06);
+  --success: #2fa050;
+  --shadow: 0 10px 30px rgba(91, 91, 214, .08);
+
+  /* Hero banner */
+  --hero: linear-gradient(120deg, #7b78ee, #6a63e6 60%, #7a6ff0);
+
+  /* Card thumbnail colors (used as `color` in js/data.js) */
+  --card-blue:   linear-gradient(160deg, #a9c2ff, #7c8cf5);
+  --card-peach:  linear-gradient(160deg, #ffd9c2, #f7a98b);
+  --card-lilac:  linear-gradient(160deg, #d9c6ff, #a98bf5);
+  --card-pink:   linear-gradient(160deg, #ffb3c4, #f27a98);
+  --card-violet: linear-gradient(160deg, #b9a1ff, #8466ee);
+  --card-rose:   linear-gradient(160deg, #f9c4ec, #e58fd0);
+  --card-mag:    linear-gradient(160deg, #f0a8f5, #c770e6);
+  --card-sky:    linear-gradient(160deg, #b6d4ff, #8aa8f7);
+  --card-mint:   linear-gradient(160deg, #bff0dc, #6fd0ad);
+  --card-amber:  linear-gradient(160deg, #ffe2a8, #f7b55a);
+
+  /* Typography */
+  --font: "Poppins", Arial, sans-serif;
+  --fs-xs: 11px;
+  --fs-sm: 13px;
+  --fs-md: 14px;
+  --fs-lg: 18px;
+  --fs-xl: 24px;
+
+  /* Spacing & shape */
+  --gap: 20px;
+  --pad: 16px;
+  --radius-sm: 10px;
+  --radius: 12px;
+  --radius-lg: 18px;
+
+  /* Layout widths */
+  --sidebar-w: 220px;
+  --aside-w: 260px;
+}
+
+/* ---------- Dark theme (toggled by the moon button) ---------- */
+:root[data-theme="dark"] {
+  --bg: #12121c;
+  --panel: #212133;
+  --panel-soft: #181826;
+  --line: #2e2e44;
+  --text: #ececf5;
+  --muted: #9a9ab0;
+  --accent: #8080f0;
+  --accent-2: #9a8cff;
+  --accent-soft: rgba(128, 128, 240, .1);
+  --shadow: 0 10px 30px rgba(0, 0, 0, .3);
+}
+
+/* ---------- Base elements ---------- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  transition: background .2s, color .2s;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+
+/* Shared white box used by the main grid and the widgets */
+.panel {
+  background: var(--panel);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+}

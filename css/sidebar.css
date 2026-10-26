@@ -1,0 +1,82 @@
+/* =========================================================
+   sidebar.css
+   Left navigation bar. On desktop it stays fixed in place
+   while the page scrolls; on phones it slides in from the
+   left when the ☰ button is pressed.
+   ========================================================= */
+
+.sidebar {
+  position: sticky;
+  top: var(--pad);
+  align-self: start;
+  height: calc(100vh - 2 * var(--pad));
+  overflow-y: auto;              /* scroll if the menu is taller than the window */
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0;
+  background: var(--panel);
+  border-radius: var(--radius-lg);
+}
+
+/* Logo + site name */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 22px 26px;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+}
+.brand svg { color: var(--accent); flex: none; }
+
+/* Category heading, e.g. "FUNDAMENTALS" */
+.nav-label {
+  padding: 14px 22px 6px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Menu links */
+.nav a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 22px;
+  font-size: var(--fs-md);
+  transition: color .15s, background .15s;
+}
+.nav a:hover { color: var(--accent); background: var(--accent-soft); }
+.nav a.active { color: var(--accent); font-weight: 500; }
+
+/* Purple bar on the left of the active link */
+.nav a.active::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--accent);
+}
+.nav .ico { width: 20px; text-align: center; font-size: 16px; }
+
+/* ---------- Phones: slide-out menu ---------- */
+@media (max-width: 860px) {
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 20;
+    width: 240px;
+    height: auto;
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    box-shadow: var(--shadow);
+    transform: translateX(-100%);
+    transition: transform .25s;
+  }
+  body.nav-open .sidebar { transform: none; }
+}

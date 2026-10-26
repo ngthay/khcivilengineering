@@ -1,0 +1,195 @@
+/* =========================================================
+   dashboard.css
+   Page layout, top bar, hero banner and the subject cards.
+   ========================================================= */
+
+/* ---------- Page layout: sidebar | main ---------- */
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  gap: var(--gap);
+  min-height: 100vh;
+  padding: var(--pad);
+}
+.main { min-width: 0; }
+
+/* Main area below the hero: cards | right widgets */
+.content {
+  display: grid;
+  grid-template-columns: 1fr var(--aside-w);
+  gap: var(--gap);
+  margin-top: var(--gap);
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 260px;
+  max-width: 100%;
+  padding: 11px 16px;
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--muted);
+}
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-md);
+}
+.top-actions { margin-left: auto; display: flex; align-items: center; gap: 18px; }
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+}
+.icon-btn:hover { background: var(--panel); }
+.icon-btn.menu-btn { display: none; }   /* only shown on phones */
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffb48a, #f37a5a);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ---------- Hero banner ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 36px;
+  border-radius: var(--radius-lg);
+  background: var(--hero);
+  color: #fff;
+}
+/* Faint ring decoration */
+.hero::after {
+  content: "";
+  position: absolute;
+  right: 160px; bottom: -120px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  border: 40px solid rgba(255, 255, 255, .06);
+}
+.hero-text { position: relative; z-index: 1; text-align: center; }
+.hero h1 { margin: 0 0 8px; font-size: var(--fs-xl); font-weight: 600; }
+.hero p { max-width: 360px; margin: 0 auto 18px; font-size: var(--fs-md); line-height: 1.6; opacity: .9; }
+.hero svg { position: relative; z-index: 1; width: 100%; height: auto; }
+
+.btn-ghost {
+  display: inline-block;
+  padding: 9px 32px;
+  border: 1px solid rgba(255, 255, 255, .7);
+  border-radius: 8px;
+  font-size: var(--fs-sm);
+  transition: background .15s;
+}
+.btn-ghost:hover { background: rgba(255, 255, 255, .15); }
+
+/* ---------- Sections (filled in by js/app.js) ---------- */
+.section + .section { margin-top: 26px; }
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.section-head h2 { margin: 0; font-size: var(--fs-lg); font-weight: 600; }
+.view-all {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.view-all:hover { color: var(--accent); }
+
+/* ---------- Subject cards ---------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.card { display: block; min-width: 0; }
+
+/* Colored picture area; its background comes from data.js `color` */
+.card .thumb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: clamp(150px, 13vw, 220px);
+  border-radius: var(--radius);
+  font-size: 64px;
+  transition: transform .2s, box-shadow .2s;
+}
+.card .thumb span { filter: drop-shadow(0 10px 12px rgba(0, 0, 0, .18)); }
+.card:hover .thumb { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(91, 91, 214, .25); }
+
+/* Two small bookmark shapes at the bottom corners */
+.card .thumb::before,
+.card .thumb::after {
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  width: 10px; height: 12px;
+  background: #fff;
+  opacity: .9;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 72%, 0 100%);
+}
+.card .thumb::before { left: 18px; }
+.card .thumb::after  { right: 18px; }
+
+.card h3,
+.card p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card h3 { margin: 12px 0 4px; font-size: var(--fs-md); font-weight: 600; }
+.card p  { margin: 0; font-size: var(--fs-xs); color: var(--muted); }
+
+/* Green tick after the title once a subject has been opened */
+.card.visited h3::after { content: " ✓"; color: var(--success); }
+
+/* Shown when search finds nothing */
+.empty { display: none; padding: 30px 0; text-align: center; color: var(--muted); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .content { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .app { grid-template-columns: 1fr; }
+  .icon-btn.menu-btn { display: grid; }
+  .hero { grid-template-columns: 1fr; padding: 28px 20px; }
+  .hero svg { display: none; }
+  .cards { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .search { width: auto; flex: 1; }
+  .top-actions { gap: 8px; }
+}
