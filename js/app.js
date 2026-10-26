@@ -166,15 +166,29 @@
     });
   }
 
-  /* ---------- Phone menu (☰ opens, tapping outside closes) ---------- */
+  /* ---------- Phone menu (☰ opens; tapping outside or Esc closes) ---------- */
   function setupMenu() {
     const sidebar = document.getElementById('sidebar');
-    document.getElementById('menuBtn').addEventListener('click', (e) => {
+    const btn = document.getElementById('menuBtn');
+
+    function setOpen(open) {
+      document.body.classList.toggle('nav-open', open);
+      btn.setAttribute('aria-expanded', open);
+    }
+
+    btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      document.body.classList.toggle('nav-open');
+      setOpen(!document.body.classList.contains('nav-open'));
     });
     document.addEventListener('click', (e) => {
-      if (!sidebar.contains(e.target)) document.body.classList.remove('nav-open');
+      if (!sidebar.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+    // Close it if the window grows to desktop size while it's open
+    window.matchMedia('(min-width: 861px)').addEventListener('change', (e) => {
+      if (e.matches) setOpen(false);
     });
   }
 

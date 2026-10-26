@@ -8,7 +8,10 @@
   display: grid;
   grid-template-columns: var(--sidebar-w) 1fr;
   gap: var(--gap);
+  max-width: 1680px;             /* keep lines readable on very wide monitors */
   min-height: 100vh;
+  min-height: 100dvh;            /* phones: ignore the browser's address bar */
+  margin: 0 auto;
   padding: var(--pad);
 }
 .main { min-width: 0; }
@@ -129,9 +132,10 @@
 .view-all:hover { color: var(--accent); }
 
 /* ---------- Subject cards ---------- */
+/* As many columns as fit: 4 on a laptop, more on wide screens, fewer on tablets */
 .cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   gap: 18px;
 }
 .card { display: block; min-width: 0; }
@@ -147,7 +151,10 @@
   transition: transform .2s, box-shadow .2s;
 }
 .card .thumb span { filter: drop-shadow(0 10px 12px rgba(0, 0, 0, .18)); }
-.card:hover .thumb { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(91, 91, 214, .25); }
+/* Lift on hover, only for mouse users (on touch screens the hover "sticks") */
+@media (hover: hover) {
+  .card:hover .thumb { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(91, 91, 214, .25); }
+}
 
 /* Two small bookmark shapes at the bottom corners */
 .card .thumb::before,
@@ -179,17 +186,41 @@
 .empty { display: none; padding: 30px 0; text-align: center; color: var(--muted); }
 
 /* ---------- Responsive ---------- */
+/* Small laptops & tablets in landscape: widgets drop below the cards */
 @media (max-width: 1100px) {
+  :root { --sidebar-w: 200px; }
   .content { grid-template-columns: 1fr; }
+  .hero { grid-template-columns: 130px 1fr 130px; padding: 22px 24px; }
 }
+
+/* Tablets in portrait & phones: sidebar becomes a slide-out menu */
 @media (max-width: 860px) {
   .app { grid-template-columns: 1fr; }
   .icon-btn.menu-btn { display: grid; }
+  .icon-btn { width: 40px; height: 40px; }        /* bigger tap targets */
+  .search { flex: 1; width: auto; min-width: 0; }
+  .search input { font-size: 16px; }              /* below 16px iPhones zoom in on tap */
   .hero { grid-template-columns: 1fr; padding: 28px 20px; }
   .hero svg { display: none; }
-  .cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .topbar { gap: 8px; margin-bottom: 14px; }
+  .top-actions { gap: 6px; }
+  .avatar { width: 36px; height: 36px; }
+  .search { padding: 9px 14px; }
+  .hero { padding: 24px 18px; }
+  .hero p { margin-bottom: 14px; }
+  .section + .section { margin-top: 22px; }
+  .cards { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px 12px; }
+  .card .thumb { height: 120px; font-size: 48px; }
+  .card h3 { margin-top: 10px; }
 }
 @media (max-width: 480px) {
-  .search { width: auto; flex: 1; }
-  .top-actions { gap: 8px; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+/* Very narrow phones: make room for the search box */
+@media (max-width: 360px) {
+  .top-actions [aria-label="Notifications"] { display: none; }
 }

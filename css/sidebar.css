@@ -71,12 +71,31 @@
     position: fixed;
     top: 0; left: 0; bottom: 0;
     z-index: 20;
-    width: 240px;
+    width: 260px;
+    max-width: 82vw;
     height: auto;
     border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
     box-shadow: var(--shadow);
+    overscroll-behavior: contain;   /* scrolling the menu doesn't scroll the page */
     transform: translateX(-100%);
-    transition: transform .25s;
+    visibility: hidden;             /* closed menu can't be reached with Tab */
+    transition: transform .25s, visibility .25s;
   }
-  body.nav-open .sidebar { transform: none; }
+  body.nav-open .sidebar { transform: none; visibility: visible; }
+
+  /* Dark backdrop behind the open menu; tapping it closes the menu */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 15;
+    background: rgba(18, 18, 28, .45);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s, visibility .25s;
+  }
+  body.nav-open::after { opacity: 1; visibility: visible; }
+  body.nav-open { overflow: hidden; }   /* lock the page while the menu is open */
+
+  .nav a { padding-block: 13px; }       /* bigger tap targets */
 }
