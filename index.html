@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Engineering Formula</title>
+
+  <!-- Step 3: font (free from Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Step 4: basic page setup */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans", Arial, sans-serif;
+      background: #ffffff;
+      color: #333;
+    }
+
+    /* Step 5: centered column */
+    .container {
+      width: 280px;
+      margin: 40px auto;
+      text-align: center;
+    }
+    h1 {
+      font-family: Arial, sans-serif;
+      font-size: 24px;
+      margin: 0 0 20px;
+    }
+
+    /* Step 6: buttons */
+    .btn {
+      display: block;
+      padding: 11px 0;
+      margin-bottom: 8px;
+      border-radius: 5px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      text-decoration: none;
+      transition: filter .15s, transform .05s;
+    }
+    .btn:hover  { filter: brightness(1.12); }
+    .btn:active { transform: translateY(1px); }
+
+    .green  { background: #2fa050; }
+    .blue   { background: #1565d8; }
+    .orange { background: #e07b00; }
+
+    hr {
+      border: 0;
+      border-top: 2px solid #d5d5d5;
+      margin: 14px 0;
+    }
+
+    /* Step 7: footer with 3 logos */
+    .footer {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-top: 18px;
+      font-size: 14px;
+      color: #555;
+    }
+    .footer a { color: inherit; text-decoration: none; }
+    .footer .label { display: block; }
+    .footer .name  { display: block; font-weight: 700; color: #222; }
+    .footer img {
+      width: 40px; height: 40px;
+      margin-top: 6px;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Engineering Formula</h1>
+
+    <!-- Group 1: green -->
+    <a class="btn green" href="dynamics.html">Dynamics</a>
+    <a class="btn green" href="mechanics.html">Mechanics</a>
+
+    <hr>
+
+    <!-- Group 2: blue -->
+    <a class="btn blue" href="design.html">Design</a>
+    <a class="btn blue" href="concrete.html">Concrete</a>
+    <a class="btn blue" href="steel.html">Steel</a>
+    <a class="btn blue" href="geo.html">Geo (Ground)</a>
+
+    <hr>
+
+    <!-- Group 3: orange -->
+    <a class="btn orange" href="ai.html">AI (Artificial Intelligence)</a>
+    <a class="btn orange" href="python.html">Python</a>
+
+    <!-- Footer: replace the logo files with your own images -->
+    <div class="footer">
+      <a href="https://example.com" target="_blank">
+        <span class="label">University</span>
+        <span class="name">laboratory</span>
+        <img src="logo-lab.png" alt="Lab logo">
+      </a>
+      <a href="https://youtube.com" target="_blank">
+        <span class="label">YouTube</span>
+        <span class="name">youtube</span>
+        <img src="logo-youtube.png" alt="YouTube logo">
+      </a>
+      <a href="https://example.com" target="_blank">
+        <span class="label">Industry</span>
+        <span class="name">Your Company Co., Ltd.</span>
+        <img src="logo-company.png" alt="Company logo">
+      </a>
+    </div>
+  </div>
+</body>
+</html>
