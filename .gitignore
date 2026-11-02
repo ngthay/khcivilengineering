@@ -1,0 +1,9 @@
+# Book files are not published (copyrighted PDFs); covers (.jpg) are kept
+books/**/*.pdf
+
+# OS / editor clutter
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+__pycache__/

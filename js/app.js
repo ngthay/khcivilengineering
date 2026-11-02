@@ -30,23 +30,55 @@
     const page = location.pathname.split('/').pop() || 'index.html';
     const active = (href) => (href === page ? ' class="active"' : '');
 
-    let html = `<a href="index.html"${active('index.html')}><span class="ico">🏠</span>Home</a>`;
+    // Menu icon: company logo on a white tile, else a small square copy of the
+    // card picture (images/cards/thumbs/), else the emoji
+    const icoHTML = (kind, src, emoji) =>
+      `<span class="ico ${kind}"><img src="${src}" alt="" data-fallback="${emoji}"></span>`;
+    const thumb = (image) => image.replace('images/cards/', 'images/cards/thumbs/');
+
+    let html = `<a href="index.html"${active('index.html')}>${icoHTML('photo', 'images/icons/home.svg', '🏠')}Home</a>`;
     categories.forEach((cat) => {
       html += `<div class="nav-label">${cat.label}</div>`;
       byCategory([cat.id]).forEach((s) => {
-        html += `<a href="${s.href}"${active(s.href)}><span class="ico">${s.icon}</span>${s.title}</a>`;
+        const logo = s.navLogo || s.logo;
+        const ico = s.navIcon ? icoHTML('photo', s.navIcon, s.icon)
+          : logo ? icoHTML('logo', logo, s.icon)
+          : s.image ? icoHTML('photo', thumb(s.image), s.icon)
+          : `<span class="ico">${s.icon}</span>`;
+        html += `<a href="${s.href}"${active(s.href)}>${ico}${s.title}</a>`;
       });
     });
     document.getElementById('nav').innerHTML = html;
+
+    // Swap in the emoji when an icon image file is missing
+    document.querySelectorAll('.nav .ico img').forEach((img) => {
+      img.addEventListener('error', () => {
+        img.parentElement.className = 'ico';
+        img.replaceWith(img.dataset.fallback);
+      });
+    });
   }
 
   /* ---------- 2. Subject card sections ---------- */
   function cardHTML(s) {
+    // Company logo sits on a white tile; plain subjects keep their emoji
+    // unless a realistic picture fills the card
+    const art = s.logo
+      ? `<span class="logo-tile"><img src="${s.logo}" alt="${s.title} logo" data-fallback="${s.icon}"></span>`
+      : s.image ? '' : `<span>${s.icon}</span>`;
+    const photo = s.image ? `<img class="photo" src="${s.image}" alt="" loading="lazy">` : '';
     return `
       <a class="card" href="${s.href}">
-        <div class="thumb" style="background: var(--card-${s.color})"><span>${s.icon}</span></div>
-        <h3>${s.title}</h3>
-        <p>${s.desc}</p>
+        <div class="thumb${s.image ? ' has-photo' : ''}" style="background: var(--card-${s.color})">${photo}${art}</div>
+        <div class="card-body">
+          <div class="card-text">
+            <h3>${s.title}</h3>
+            <p>${s.desc}</p>
+          </div>
+          <span class="card-go" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
       </a>`;
   }
 
@@ -60,12 +92,20 @@
         <section class="section" data-group="${sec.id}">
           <div class="section-head">
             <h2>${sec.title}</h2>
-            <a class="view-all" href="${viewAll}">View all</a>
+            <a class="view-all" href="${viewAll}">View All
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+            </a>
           </div>
           <div class="cards">${items.map(cardHTML).join('')}</div>
         </section>`;
     }).join('');
     document.getElementById('sections').innerHTML = html;
+
+    // Swap in the emoji when a logo image file is missing
+    document.querySelectorAll('.logo-tile img').forEach((img) => {
+      img.addEventListener('error', () => img.parentElement.replaceWith(Object.assign(
+        document.createElement('span'), { textContent: img.dataset.fallback })));
+    });
   }
 
   /* ---------- 3. Study progress widget ---------- */

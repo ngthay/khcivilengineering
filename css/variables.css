@@ -24,6 +24,17 @@
   --success: #2fa050;
   --shadow: 0 10px 30px rgba(91, 91, 214, .08);
 
+  /* Subject cards (home page): blue accent, dark navy titles */
+  --brand: #1f5bea;
+  --brand-soft: #e9f0ff;
+  --title: #101a3d;
+  --card-border: #e6eaf4;
+  --card-shadow: 0 8px 24px rgba(16, 26, 61, .07);
+
+  /* Sidebar picture icons: outline + photo tweak so they read on the panel */
+  --ico-ring: rgba(29, 29, 43, .12);
+  --ico-filter: none;
+
   /* Hero banner */
   --hero: linear-gradient(120deg, #7b78ee, #6a63e6 60%, #7a6ff0);
 
@@ -71,6 +82,13 @@
   --accent-2: #9a8cff;
   --accent-soft: rgba(128, 128, 240, .1);
   --shadow: 0 10px 30px rgba(0, 0, 0, .3);
+  --brand: #7ea3ff;
+  --brand-soft: rgba(126, 163, 255, .12);
+  --title: #ececf5;
+  --card-border: #2e2e44;
+  --card-shadow: 0 8px 24px rgba(0, 0, 0, .3);
+  --ico-ring: rgba(255, 255, 255, .35);
+  --ico-filter: brightness(1.2) saturate(1.1);   /* dark photos get lost on the dark panel */
 }
 
 /* ---------- Base elements ---------- */

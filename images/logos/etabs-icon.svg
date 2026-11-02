@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- ETABS app icon (blue "E" tile over the grey "7" shape), redrawn as a vector -->
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="2.5" dy="3" stdDeviation="2" flood-color="#1d2a33" flood-opacity=".55"/>
+    </filter>
+  </defs>
+  <!-- Grey "7" -->
+  <path fill="#506e7f" d="M53 6h147v182a12 12 0 0 1-12 12H65a12 12 0 0 1-12-12z"/>
+  <path fill="#91b2c4" stroke="#fff" stroke-width="3" stroke-linejoin="round"
+        d="M60 1.5h132Q172 80 151 201.5H101z"/>
+  <path fill="#fff" d="M88 24h78l-21 57h-27z"/>
+  <!-- Blue "E" tile -->
+  <g filter="url(#shadow)">
+    <rect x="4" y="43" width="114" height="114" rx="4" fill="#c5edff"/>
+    <rect x="8" y="47" width="105.5" height="105.5" rx="2.5" fill="#0077e2"/>
+  </g>
+  <path fill="#fff" d="M86 61H47Q32.5 61 32.5 76v48q0 15 14.5 15h39v-17H55q-5 0-5-5v-9h31V91H50v-8q0-5 5-5h31z"/>
+</svg>

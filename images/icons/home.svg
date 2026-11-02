@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eef2fb"/>
+    </linearGradient>
+    <linearGradient id="house" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6a95ff"/>
+      <stop offset="1" stop-color="#1c40cf"/>
+    </linearGradient>
+    <filter id="drop" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#1c40cf" flood-opacity=".28"/>
+    </filter>
+  </defs>
+
+  <!-- White tile (the sidebar rounds its corners) -->
+  <rect width="64" height="64" fill="url(#bg)"/>
+
+  <!-- Blue house -->
+  <g filter="url(#drop)">
+    <rect x="40.5" y="16" width="5.5" height="11" rx="1.2" fill="url(#house)"/>
+    <path d="M32 13.5 L11.5 31 H17.5 V50.5 H46.5 V31 H52.5 Z"
+          fill="url(#house)" stroke="url(#house)" stroke-width="3.2" stroke-linejoin="round"/>
+    <path d="M27 50.5 V41.5 a5 5 0 0 1 10 0 V50.5 Z" fill="#ffffff"/>
+    <circle cx="34.6" cy="46" r="0.9" fill="#1c40cf"/>
+  </g>
+</svg>

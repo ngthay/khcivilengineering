@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mechanics · KCE</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Math (KaTeX) for the equations in the lessons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Styles: same as the home page, plus lesson.css -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/widgets.css">
+  <link rel="stylesheet" href="css/lesson.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ===== Left sidebar ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true">
+          <rect width="28" height="4" rx="2"/><rect y="9" width="22" height="4" rx="2"/><rect y="18" width="28" height="4" rx="2"/>
+        </svg>
+        KCE
+      </div>
+      <!-- Menu links are built from js/data.js -->
+      <nav class="nav" id="nav"></nav>
+    </aside>
+
+    <!-- ===== Main content ===== -->
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">☰</button>
+        <label class="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+          </svg>
+          <input type="search" id="search" placeholder="Search lessons..." aria-label="Search lessons">
+        </label>
+        <div class="top-actions">
+          <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Course outline or one lesson, built by js/lesson.js -->
+      <div id="course"></div>
+    </main>
+  </div>
+
+  <!-- Scripts: data first, then the code that uses it -->
+  <script src="js/data.js"></script>
+  <script src="js/lessons/mechanics/course.js"></script>
+  <script src="js/lessons/mechanics/01-units.js"></script>
+  <script src="js/lessons/mechanics/02-rectilinear.js"></script>
+  <script src="js/lessons/mechanics/03-curvilinear.js"></script>
+  <script src="js/lessons/mechanics/04-circular-shm.js"></script>
+  <script src="js/lessons/mechanics/05-projectiles.js"></script>
+  <script src="js/lessons/mechanics/06-relative-polar.js"></script>
+  <script src="js/lessons/mechanics/07-newton.js"></script>
+  <script src="js/lessons/mechanics/08-oscillators.js"></script>
+  <script src="js/lessons/mechanics/09-work-energy.js"></script>
+  <script src="js/lessons/mechanics/10-gravitation.js"></script>
+  <script src="js/lessons/mechanics/11-collisions.js"></script>
+  <script src="js/lessons/mechanics/12-rigid-bodies.js"></script>
+  <script src="js/app.js"></script>
+  <!-- KaTeX loads with defer, so start the page after it -->
+  <script defer src="js/lesson.js"></script>
+</body>
+</html>

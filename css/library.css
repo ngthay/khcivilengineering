@@ -227,6 +227,9 @@
   .row .row-meta { display: none; }
   .row .book-actions { width: 100%; padding-left: 48px; }
 }
+@media (max-height: 500px) and (orientation: landscape) {
+  .lib-hero { padding: 16px 20px; }
+}
 @media (max-width: 480px) {
   .books.grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; }
   .cover { padding: 14px 10px 14px 18px; gap: 10px; }

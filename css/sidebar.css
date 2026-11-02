@@ -63,7 +63,23 @@
   border-radius: 0 3px 3px 0;
   background: var(--accent);
 }
-.nav .ico { width: 20px; text-align: center; font-size: 16px; }
+.nav .ico { flex: none; width: 30px; text-align: center; font-size: 18px; }
+
+/* Picture icons: small rounded photos; company logos sit on a white tile.
+   The thin outline (--ico-ring) keeps both clear on light and dark panels. */
+.nav .ico.photo,
+.nav .ico.logo {
+  display: grid;
+  place-items: center;
+  height: 30px;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1.5px var(--ico-ring), 0 2px 6px rgba(0, 0, 0, .25);
+}
+.nav .ico.logo { padding: 3px; background: #fff; }
+.nav .ico img { width: 100%; height: 100%; }
+.nav .ico.photo img { object-fit: cover; filter: var(--ico-filter); }
+.nav .ico.logo img  { object-fit: contain; }
 
 /* ---------- Phones: slide-out menu ---------- */
 @media (max-width: 860px) {

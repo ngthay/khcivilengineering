@@ -8,10 +8,8 @@
   display: grid;
   grid-template-columns: var(--sidebar-w) 1fr;
   gap: var(--gap);
-  max-width: 1680px;             /* keep lines readable on very wide monitors */
   min-height: 100vh;
   min-height: 100dvh;            /* phones: ignore the browser's address bar */
-  margin: 0 auto;
   padding: var(--pad);
 }
 .main { min-width: 0; }
@@ -66,42 +64,31 @@
 .icon-btn:hover { background: var(--panel); }
 .icon-btn.menu-btn { display: none; }   /* only shown on phones */
 
-.avatar {
-  display: grid;
-  place-items: center;
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ffb48a, #f37a5a);
-  color: #fff;
-  font-weight: 600;
-}
 
 /* ---------- Hero banner ---------- */
+/* Photo in three layers so it fits any width: books pinned left, shelf
+   pinned right, and a plain wall stretched between them. The purple
+   gradient shows while they load; a soft dark glow behind the text
+   keeps it readable on the light wall. */
 .hero {
-  position: relative;
-  overflow: hidden;
+  --text-glow: radial-gradient(ellipse 34% 75% at 50% 50%, rgba(52, 42, 160, .5), rgba(52, 42, 160, 0));
   display: grid;
-  grid-template-columns: 200px 1fr 200px;
-  align-items: center;
-  gap: 16px;
+  place-items: center;
+  min-height: 230px;
   padding: 24px 36px;
   border-radius: var(--radius-lg);
-  background: var(--hero);
+  background:
+    var(--text-glow),
+    url("../images/hero-left.webp")  left center / auto 100% no-repeat,
+    url("../images/hero-right.webp") right center / auto 100% no-repeat,
+    url("../images/hero-wall.jpg")  center / 100% 100% no-repeat,
+    var(--hero);
+  box-shadow: 0 10px 30px rgba(70, 60, 190, .25);
   color: #fff;
 }
-/* Faint ring decoration */
-.hero::after {
-  content: "";
-  position: absolute;
-  right: 160px; bottom: -120px;
-  width: 260px; height: 260px;
-  border-radius: 50%;
-  border: 40px solid rgba(255, 255, 255, .06);
-}
-.hero-text { position: relative; z-index: 1; text-align: center; }
+.hero-text { text-align: center; text-shadow: 0 2px 10px rgba(30, 20, 110, .45); }
 .hero h1 { margin: 0 0 8px; font-size: var(--fs-xl); font-weight: 600; }
-.hero p { max-width: 360px; margin: 0 auto 18px; font-size: var(--fs-md); line-height: 1.6; opacity: .9; }
-.hero svg { position: relative; z-index: 1; width: 100%; height: auto; }
+.hero p { max-width: 360px; margin: 0 auto 18px; font-size: var(--fs-md); line-height: 1.6; opacity: .95; }
 
 .btn-ghost {
   display: inline-block;
@@ -114,14 +101,34 @@
 .btn-ghost:hover { background: rgba(255, 255, 255, .15); }
 
 /* ---------- Sections (filled in by js/app.js) ---------- */
-.section + .section { margin-top: 26px; }
+.section + .section { margin-top: 40px; }
 .section-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
+  gap: 12px;
+  margin-bottom: 18px;
 }
-.section-head h2 { margin: 0; font-size: var(--fs-lg); font-weight: 600; }
+/* Big title with a blue accent bar on the left */
+.section-head h2 {
+  position: relative;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--title);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.2;
+}
+.section-head h2::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 50%;
+  width: 5px; height: 1.05em;
+  border-radius: 3px;
+  background: var(--brand);
+  transform: translateY(-50%);
+}
 .view-all {
   font-size: var(--fs-xs);
   font-weight: 500;
@@ -130,32 +137,115 @@
   color: var(--muted);
 }
 .view-all:hover { color: var(--accent); }
+/* "View All ›" pill (links only; plain counters keep the small label) */
+a.view-all {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px 9px 20px;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: var(--panel);
+  box-shadow: var(--card-shadow);
+  color: var(--brand);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: background .15s, border-color .15s;
+}
+a.view-all:hover { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
+
+/* The subject panel sits straight on the page background, like the template */
+#subjects.panel { padding: 8px 4px; background: transparent; }
 
 /* ---------- Subject cards ---------- */
-/* As many columns as fit: 4 on a laptop, more on wide screens, fewer on tablets */
+/* Up to 4 columns that stretch to fill the width; fewer when a card would get
+   narrower than 200px. 61px = the 3 gaps of 20px, plus 1px spare. */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(max(200px, calc((100% - 61px) / 4)), 1fr));
+  gap: 20px;
 }
-.card { display: block; min-width: 0; }
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  background: var(--panel);
+  box-shadow: var(--card-shadow);
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--brand) 35%, var(--card-border));
+    box-shadow: 0 16px 34px rgba(31, 91, 234, .16);
+  }
+}
+
+/* Title, two-line description and the round arrow button */
+.card-body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  padding: 18px 16px 20px 20px;
+}
+.card-text { flex: 1; min-width: 0; }
+.card-go {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px; height: 42px;
+  border: 1px solid var(--card-border);
+  border-radius: 50%;
+  background: var(--panel);
+  box-shadow: 0 6px 16px rgba(16, 26, 61, .1);
+  color: var(--brand);
+  transition: background .2s, color .2s, transform .2s;
+}
+@media (hover: hover) {
+  .card:hover .card-go { background: var(--brand); border-color: var(--brand); color: #fff; transform: translateX(3px); }
+}
 
 /* Colored picture area; its background comes from data.js `color` */
 .card .thumb {
   position: relative;
   display: grid;
   place-items: center;
-  height: clamp(150px, 13vw, 220px);
-  border-radius: var(--radius);
+  flex: none;
+  height: clamp(160px, 14vw, 230px);
+  overflow: hidden;
+  border-radius: 0;                 /* the card's rounded corners clip it */
   font-size: 64px;
-  transition: transform .2s, box-shadow .2s;
 }
 .card .thumb span { filter: drop-shadow(0 10px 12px rgba(0, 0, 0, .18)); }
-/* Lift on hover, only for mouse users (on touch screens the hover "sticks") */
-@media (hover: hover) {
-  .card:hover .thumb { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(91, 91, 214, .25); }
-}
 
+/* Company logo on a white "app icon" tile */
+.card .thumb .logo-tile {
+  position: relative;
+  width: clamp(80px, 38%, 116px);
+  aspect-ratio: 1;
+  border-radius: 24%;
+  background: #fff;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, .14), inset 0 0 0 1px rgba(0, 0, 0, .04);
+  filter: none;
+  transition: transform .25s;
+}
+/* Thin side margins give wide wordmarks (ETABS, MIDAS) more room */
+.card .thumb .logo-tile img {
+  position: absolute;
+  top: 15%; left: 9%;
+  width: 82%; height: 70%;
+  object-fit: contain;
+}
+@media (hover: hover) {
+  .card:hover .thumb .logo-tile { transform: scale(1.06) rotate(-2deg); }
+}
 /* Two small bookmark shapes at the bottom corners */
 .card .thumb::before,
 .card .thumb::after {
@@ -170,14 +260,66 @@
 .card .thumb::before { left: 18px; }
 .card .thumb::after  { right: 18px; }
 
-.card h3,
-.card p {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* ---------- Realistic picture cards (data.js `image`) ---------- */
+.card .thumb.has-photo { overflow: hidden; }
+.card .thumb.has-photo::before,
+.card .thumb.has-photo::after { display: none; }   /* no bookmarks over photos */
+.card .thumb .photo {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
 }
-.card h3 { margin: 12px 0 4px; font-size: var(--fs-md); font-weight: 600; }
-.card p  { margin: 0; font-size: var(--fs-xs); color: var(--muted); }
+@media (hover: hover) {
+  .card:hover .thumb .photo { transform: scale(1.06); }
+}
+
+/* Logo on a photo: a glossy, slightly tilted 3D tile */
+.card .thumb.has-photo .logo-tile {
+  background: linear-gradient(160deg, #fff 0%, #f2f3f7 55%, #dde0e8 100%);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, .9),
+    inset 0 -4px 8px rgba(0, 0, 0, .08),
+    0 5px 0 #c3c7d2,
+    0 18px 30px rgba(0, 0, 0, .45);
+  transform: perspective(500px) rotateX(10deg);
+}
+.card .thumb.has-photo .logo-tile::after {        /* glass shine on the top half */
+  content: "";
+  position: absolute;
+  inset: 0 0 50% 0;
+  border-radius: inherit;
+  border-bottom-left-radius: 50% 18%;
+  border-bottom-right-radius: 50% 18%;
+  background: linear-gradient(rgba(255, 255, 255, .55), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .card:hover .thumb.has-photo .logo-tile { transform: perspective(500px) rotateX(0) scale(1.06); }
+}
+
+.card h3 {
+  margin: 0 0 6px;
+  color: var(--title);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;          /* long titles wrap instead of being cut */
+}
+/* Description: up to two lines, then "…" */
+.card p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  min-height: 2.9em;                 /* keeps all cards in a row the same height */
+  margin: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
 
 /* Green tick after the title once a subject has been opened */
 .card.visited h3::after { content: " ✓"; color: var(--success); }
@@ -190,7 +332,7 @@
 @media (max-width: 1100px) {
   :root { --sidebar-w: 200px; }
   .content { grid-template-columns: 1fr; }
-  .hero { grid-template-columns: 130px 1fr 130px; padding: 22px 24px; }
+  .hero { padding: 22px 24px; }
 }
 
 /* Tablets in portrait & phones: sidebar becomes a slide-out menu */
@@ -200,27 +342,45 @@
   .icon-btn { width: 40px; height: 40px; }        /* bigger tap targets */
   .search { flex: 1; width: auto; min-width: 0; }
   .search input { font-size: 16px; }              /* below 16px iPhones zoom in on tap */
-  .hero { grid-template-columns: 1fr; padding: 28px 20px; }
-  .hero svg { display: none; }
+  .hero { padding: 28px 20px; }
 }
 
 /* Phones */
 @media (max-width: 600px) {
   .topbar { gap: 8px; margin-bottom: 14px; }
   .top-actions { gap: 6px; }
-  .avatar { width: 36px; height: 36px; }
   .search { padding: 9px 14px; }
-  .hero { padding: 24px 18px; }
+  /* Text fills the width here, so drop the books and shelf behind it */
+  .hero {
+    padding: 24px 18px;
+    background: var(--text-glow), url("../images/hero-wall.jpg") center / 100% 100% no-repeat, var(--hero);
+  }
   .hero p { margin-bottom: 14px; }
-  .section + .section { margin-top: 22px; }
-  .cards { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px 12px; }
+  .section + .section { margin-top: 30px; }
+  .section-head h2 { font-size: 22px; padding-left: 14px; }
+  .section-head h2::before { width: 4px; }
+  a.view-all { padding: 7px 12px 7px 15px; font-size: 13px; }
+  .cards { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px 12px; }
+  .card { border-radius: 14px; }
   .card .thumb { height: 120px; font-size: 48px; }
-  .card h3 { margin-top: 10px; }
+  .card-body { gap: 8px; padding: 12px 10px 14px 14px; }
+  .card h3 { font-size: 15px; margin-bottom: 4px; }
+  .card p { font-size: 12.5px; }
+  .card-go { width: 34px; height: 34px; }
+  .card-go svg { width: 16px; height: 16px; }
 }
 @media (max-width: 480px) {
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-/* Very narrow phones: make room for the search box */
-@media (max-width: 360px) {
-  .top-actions [aria-label="Notifications"] { display: none; }
+/* Very narrow: the arrow button would squeeze the text */
+@media (max-width: 380px) {
+  .card-go { display: none; }
 }
+/* Phones held sideways: short screen, so keep the banner compact */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { min-height: 0; padding: 16px 20px; }
+  .hero h1 { margin-bottom: 4px; }
+  .hero p { margin-bottom: 10px; line-height: 1.5; }
+  .btn-ghost { padding: 6px 26px; }
+}
+
