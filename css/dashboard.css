@@ -66,25 +66,82 @@
 
 
 /* ---------- Hero banner ---------- */
-/* Photo in three layers so it fits any width: books pinned left, shelf
-   pinned right, and a plain wall stretched between them. The purple
-   gradient shows while they load; a soft dark glow behind the text
-   keeps it readable on the light wall. */
+/* Photo in layers so it fits any width: a plain wall stretched across
+   (::before) and, on top, the table, books pinned left and a shelf
+   pinned right (::after, cut out so the wall shows through). The wall
+   changes colour every 2 s through six colours; the books and table
+   keep their own colours. A soft dark glow behind the text keeps it
+   readable on the light wall. */
 .hero {
   --text-glow: radial-gradient(ellipse 34% 75% at 50% 50%, rgba(52, 42, 160, .5), rgba(52, 42, 160, 0));
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: grid;
   place-items: center;
   min-height: 230px;
   padding: 24px 36px;
   border-radius: var(--radius-lg);
-  background:
-    var(--text-glow),
-    url("../images/hero-left.webp")  left center / auto 100% no-repeat,
-    url("../images/hero-right.webp") right center / auto 100% no-repeat,
-    url("../images/hero-wall.jpg")  center / 100% 100% no-repeat,
-    var(--hero);
+  background: var(--hero);
   box-shadow: 0 10px 30px rgba(70, 60, 190, .25);
   color: #fff;
+}
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.hero::before {
+  background:
+    var(--text-glow),
+    url("../images/hero-wall.jpg") center / 100% 100% no-repeat,
+    var(--hero);
+  animation: hero-colours 12s infinite;
+}
+.hero::after {
+  background:
+    url("../images/hero-left.webp")  left center / auto 100% no-repeat,
+    url("../images/hero-right.webp") right center / auto 100% no-repeat,
+    url("../images/hero-table.png")  center / 100% 100% no-repeat;   /* the table keeps its colour */
+}
+/* Six colours, 2 s each: purple, blue, teal, green, orange, pink */
+@keyframes hero-colours {
+  0%, 13%     { filter: hue-rotate(0deg); }
+  16.7%, 30%  { filter: hue-rotate(-40deg); }
+  33.3%, 46%  { filter: hue-rotate(-95deg); }
+  50%, 63%    { filter: hue-rotate(-145deg); }
+  66.7%, 80%  { filter: hue-rotate(-215deg); }
+  83.3%, 96%  { filter: hue-rotate(-285deg); }
+  100%        { filter: hue-rotate(-360deg); }
+}
+/* Six dots under the text; the lit one follows the colour */
+.hero-dots {
+  position: absolute;
+  left: 50%; bottom: 9px;
+  display: flex;
+  gap: 7px;
+  transform: translateX(-50%);
+}
+.hero-dots i {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .45);
+  animation: hero-dot 12s infinite;
+}
+.hero-dots i:nth-child(2) { animation-delay: 2s; }
+.hero-dots i:nth-child(3) { animation-delay: 4s; }
+.hero-dots i:nth-child(4) { animation-delay: 6s; }
+.hero-dots i:nth-child(5) { animation-delay: 8s; }
+.hero-dots i:nth-child(6) { animation-delay: 10s; }
+@keyframes hero-dot {
+  0%, 15%   { background: #fff; transform: scale(1.3); }
+  17%, 100% { background: rgba(255, 255, 255, .45); transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero::before, .hero-dots i { animation: none; }
+  .hero-dots { display: none; }
 }
 .hero-text { text-align: center; text-shadow: 0 2px 10px rgba(30, 20, 110, .45); }
 .hero h1 { margin: 0 0 8px; font-size: var(--fs-xl); font-weight: 600; }
@@ -352,10 +409,8 @@ a.view-all:hover, button.view-all:hover { border-color: var(--brand); background
   .top-actions { gap: 6px; }
   .search { padding: 9px 14px; }
   /* Text fills the width here, so drop the books and shelf behind it */
-  .hero {
-    padding: 24px 18px;
-    background: var(--text-glow), url("../images/hero-wall.jpg") center / 100% 100% no-repeat, var(--hero);
-  }
+  .hero { padding: 24px 18px 30px; }
+  .hero::after { background: url("../images/hero-table.png") center / 100% 100% no-repeat; }
   .hero p { margin-bottom: 14px; }
   .section + .section { margin-top: 30px; }
   .section-head h2 { font-size: 22px; padding-left: 14px; }
