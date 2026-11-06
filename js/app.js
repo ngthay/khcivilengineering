@@ -51,6 +51,13 @@
     });
     document.getElementById('nav').innerHTML = html;
 
+    // Start the menu scrolled so the current page's link is in view
+    const sidebar = document.getElementById('sidebar');
+    const current = sidebar.querySelector('.nav a.active');
+    if (current && current.offsetTop + current.offsetHeight > sidebar.clientHeight - 40) {
+      sidebar.scrollTop = current.offsetTop - sidebar.clientHeight / 2;
+    }
+
     // Swap in the emoji when an icon image file is missing
     document.querySelectorAll('.nav .ico img').forEach((img) => {
       img.addEventListener('error', () => {
@@ -197,7 +204,7 @@
   /* ---------- 4. Quick links widget ---------- */
   function renderLinks() {
     document.getElementById('links').innerHTML = links.map((l) => `
-      <a class="link-item" href="${l.href}" target="_blank">
+      <a class="link-item" href="${l.href}" target="_blank" rel="noopener">
         <div class="logo" style="background:${l.color}">
           <img src="${l.logo}" alt="" data-fallback="${l.fallback}">
         </div>

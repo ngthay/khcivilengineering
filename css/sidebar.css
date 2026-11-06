@@ -10,7 +10,10 @@
   top: var(--pad);
   align-self: start;
   height: calc(100vh - 2 * var(--pad));
+  height: calc(100dvh - 2 * var(--pad));   /* iPad/iPhone: the visible height, without the browser bars */
   overflow-y: auto;              /* scroll if the menu is taller than the window */
+  overscroll-behavior: contain;  /* reaching the end of the menu doesn't scroll the page */
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: var(--line) transparent;
   display: flex;
@@ -89,10 +92,13 @@
     z-index: 20;
     width: 260px;
     max-width: 82vw;
-    height: auto;
+    height: 100vh;
+    height: 100dvh;
+    /* keep the first and last links clear of the notch and the home bar */
+    padding-top: calc(20px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
     border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
     box-shadow: var(--shadow);
-    overscroll-behavior: contain;   /* scrolling the menu doesn't scroll the page */
     transform: translateX(-100%);
     visibility: hidden;             /* closed menu can't be reached with Tab */
     transition: transform .25s, visibility .25s;
@@ -111,7 +117,9 @@
     transition: opacity .25s, visibility .25s;
   }
   body.nav-open::after { opacity: 1; visibility: visible; }
-  body.nav-open { overflow: hidden; }   /* lock the page while the menu is open */
+  /* lock the page while the menu is open (iPhone Safari needs it on <html> too) */
+  body.nav-open,
+  html:has(body.nav-open) { overflow: hidden; }
 
   .nav a { padding-block: 13px; }       /* bigger tap targets */
 }

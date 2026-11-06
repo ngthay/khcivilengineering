@@ -85,8 +85,6 @@ window.KCE_DATA = {
   /* ---------- Quick links (right column) ----------
      logo     : image file; if it is missing, `fallback` emoji is shown instead */
   links: [
-    { title: "University", subtitle: "laboratory",             href: "https://example.com", logo: "logo-lab.png",     fallback: "🎓", color: "#e6dcff" },
-    { title: "YouTube",    subtitle: "youtube",                href: "https://youtube.com", logo: "logo-youtube.png", fallback: "▶️", color: "#ffd6d6" },
-    { title: "Industry",   subtitle: "Your Company Co., Ltd.", href: "https://example.com", logo: "logo-company.png", fallback: "🏢", color: "#ffe8c7" }
+    { title: "YouTube", subtitle: "KCE Solutions", href: "https://www.youtube.com/channel/UCfMv1GQ7a_tqvPsbPtQ-_hw", logo: "logo-youtube.png", fallback: "▶️", color: "#ffd6d6" }
   ]
 };
