@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 678 486">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaf2fb"/><stop offset="1" stop-color="#f7f9fc"/></linearGradient>
+    <linearGradient id="conc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9ced6"/><stop offset="1" stop-color="#9aa1ab"/></linearGradient>
+  </defs>
+  <rect width="678" height="486" fill="url(#sky)"/>
+  <!-- soil layers -->
+  <rect y="170" width="678" height="70" fill="#8b5e3c"/>
+  <rect y="240" width="678" height="80" fill="#d9b07a"/>
+  <rect y="320" width="678" height="80" fill="#c4874f"/>
+  <rect y="400" width="678" height="86" fill="#7c828a"/>
+  <path d="M0 170 Q 120 160 240 170 T 480 168 T 678 170 V176 H0Z" fill="#5f9e4a"/>
+  <g fill="#6b4529" opacity=".35"><circle cx="60" cy="200" r="5"/><circle cx="530" cy="210" r="6"/><circle cx="610" cy="190" r="4"/></g>
+  <g fill="#b98d57" opacity=".5"><circle cx="90" cy="280" r="4"/><circle cx="560" cy="300" r="5"/><circle cx="470" cy="262" r="3"/></g>
+  <g fill="#5d636b" opacity=".6"><path d="M20 430h60l-10 20h-60z"/><path d="M520 420h70l-12 24h-70z"/></g>
+  <!-- column + spread footing -->
+  <rect x="150" y="60" width="40" height="150" fill="url(#conc)"/>
+  <rect x="100" y="210" width="140" height="34" fill="url(#conc)" stroke="#7a818b" stroke-width="2"/>
+  <!-- pile cap + piles -->
+  <rect x="420" y="60" width="40" height="120" fill="url(#conc)"/>
+  <rect x="370" y="180" width="140" height="40" fill="url(#conc)" stroke="#7a818b" stroke-width="2"/>
+  <g fill="url(#conc)" stroke="#7a818b" stroke-width="2">
+    <rect x="384" y="220" width="22" height="200"/><rect x="429" y="220" width="22" height="200"/><rect x="474" y="220" width="22" height="200"/>
+  </g>
+  <!-- slab line -->
+  <rect x="80" y="52" width="440" height="12" rx="3" fill="#a9b0ba"/>
+  <!-- stress bulb under footing -->
+  <path d="M100 246 Q 170 330 240 246" fill="none" stroke="#3b6fd8" stroke-width="3" stroke-dasharray="8 6" opacity=".8"/>
+  <path d="M110 246 Q 170 300 230 246" fill="none" stroke="#3b6fd8" stroke-width="3" stroke-dasharray="8 6" opacity=".6"/>
+</svg>

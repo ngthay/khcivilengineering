@@ -288,7 +288,8 @@
   font: inherit;
   font-size: var(--fs-sm);
 }
-.calc-grid input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.calc-grid input:focus, .calc-grid select:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.calc-grid select { width: 100%; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--text); font: inherit; font-size: var(--fs-sm); }
 .calc-out { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; font-size: var(--fs-sm); }
 .calc-out span { padding: 3px 10px; border-radius: 8px; background: var(--panel); }
 .calc-out .big { flex-basis: 100%; font-weight: 600; }
@@ -369,7 +370,6 @@
   font-weight: 600;
 }
 .toc-list a b { display: inline-block; min-width: 22px; color: var(--muted); font-weight: 600; }
-.toc-list .tick { color: var(--success); }
 
 .toc-foot {
   display: flex;
@@ -540,3 +540,37 @@
   .kb-row.r2 { padding-left: 14px; }
   .kb-row.r3 { padding-left: 30px; }
 }
+
+/* Screenshots exported from a source book (ETABS course) */
+.fig.shot img { max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.fig.shot.dark img { background: #000; }
+img.ico { height: 1.25em; width: auto; vertical-align: -0.25em; margin: 0 2px; border-radius: 3px; }
+img.ico.wide { height: 1.35em; }
+.shot-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: flex-start; }
+.shot-row img { flex: 0 1 auto; min-width: 0; }
+
+/* Code listings (Python and AI courses), built by js/code-blocks.js */
+.code-block { margin: 10px 0 16px; border-radius: var(--radius-sm); overflow: hidden; background: #1e1e2e; border: 1px solid #2c2c40; }
+.code-block.out { background: #14141f; }
+.code-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 10px 6px 14px; background: #27273a; font-size: var(--fs-xs); color: #b8b8cc; }
+.code-block.out .code-head { background: #1d1d2b; }
+.code-lang::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 7px; border-radius: 50%; background: #82aaff; }
+.code-lang.out::before { background: #7fd38c; }
+.code-lang.sh::before { background: #ffcb6b; }
+.code-copy { padding: 2px 10px; border: 1px solid #3d3d58; border-radius: 6px; background: transparent; color: #c8c8dc; font: inherit; font-size: var(--fs-xs); cursor: pointer; }
+.code-copy:hover { background: #34344c; color: #fff; }
+.lesson pre.code { margin: 0; padding: 12px 16px; overflow-x: auto; line-height: 1.6; tab-size: 4; }
+.lesson pre.code code { display: block; padding: 0; background: none; border-radius: 0; color: #e4e4ef; font-family: Consolas, "Cascadia Mono", Menlo, monospace; font-size: 13px; white-space: pre; }
+.code-block.out pre.code code { color: #cfd6e4; }
+.tk-k { color: #c792ea; }
+.tk-s { color: #c3e88d; }
+.tk-c { color: #7f8ca3; font-style: italic; }
+.tk-n { color: #f78c6c; }
+.tk-f { color: #82aaff; }
+.tk-b { color: #89ddff; }
+.tk-d { color: #ffcb6b; }
+
+/* Plot for the regression calculator */
+.calc svg.plot { width: 100%; max-width: 520px; height: auto; margin-top: 12px; display: block; }
+.calc textarea { width: 100%; min-height: 112px; margin-top: 4px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--text); font: 13px Consolas, Menlo, monospace; resize: vertical; }
+.fig .credit { opacity: .75; font-size: .92em; }

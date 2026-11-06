@@ -137,8 +137,8 @@
   color: var(--muted);
 }
 .view-all:hover { color: var(--accent); }
-/* "View All ›" pill (links only; plain counters keep the small label) */
-a.view-all {
+/* "View All ›" pill (links and buttons; plain counters keep the small label) */
+a.view-all, button.view-all {
   flex: none;
   display: inline-flex;
   align-items: center;
@@ -153,9 +153,13 @@ a.view-all {
   font-weight: 600;
   letter-spacing: 0;
   text-transform: none;
+  font-family: inherit;
+  cursor: pointer;
   transition: background .15s, border-color .15s;
 }
-a.view-all:hover { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
+button.view-all svg { transition: transform .2s; }
+.section.as-list button.view-all svg { transform: rotate(90deg); }
+a.view-all:hover, button.view-all:hover { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
 
 /* The subject panel sits straight on the page background, like the template */
 #subjects.panel { padding: 8px 4px; background: transparent; }
@@ -321,9 +325,6 @@ a.view-all:hover { border-color: var(--brand); background: var(--brand-soft); co
   line-height: 1.45;
 }
 
-/* Green tick after the title once a subject has been opened */
-.card.visited h3::after { content: " ✓"; color: var(--success); }
-
 /* Shown when search finds nothing */
 .empty { display: none; padding: 30px 0; text-align: center; color: var(--muted); }
 
@@ -359,7 +360,7 @@ a.view-all:hover { border-color: var(--brand); background: var(--brand-soft); co
   .section + .section { margin-top: 30px; }
   .section-head h2 { font-size: 22px; padding-left: 14px; }
   .section-head h2::before { width: 4px; }
-  a.view-all { padding: 7px 12px 7px 15px; font-size: 13px; }
+  a.view-all, button.view-all { padding: 7px 12px 7px 15px; font-size: 13px; }
   .cards { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px 12px; }
   .card { border-radius: 14px; }
   .card .thumb { height: 120px; font-size: 48px; }
@@ -384,3 +385,73 @@ a.view-all:hover { border-color: var(--brand); background: var(--brand-soft); co
   .btn-ghost { padding: 6px 26px; }
 }
 
+
+/* Geo (Ground) hub page: two course cards (geo.html) */
+.geo-hub { padding: 8px 4px 32px; }
+.geo-intro { margin: -6px 0 18px; max-width: 720px; color: var(--muted); line-height: 1.6; }
+.geo-hub .cards { grid-template-columns: repeat(auto-fill, minmax(260px, 340px)); }
+
+/* ---------- "View All": subjects as a list, lessons inside ---------- */
+.subject-list { display: none; }
+.section.as-list .cards { display: none; }
+.section.as-list .subject-list { display: grid; gap: 10px; }
+.sl-row {
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--card-shadow);
+}
+.sl-row summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  cursor: pointer;
+  list-style: none;
+}
+.sl-row summary::-webkit-details-marker { display: none; }
+.sl-row summary:hover { background: var(--brand-soft); }
+.sl-ico {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--panel-soft);
+  font-size: 22px;
+}
+.sl-ico img { width: 100%; height: 100%; object-fit: cover; }
+.sl-ico.logo { background: #fff; border: 1px solid var(--card-border); }
+.sl-ico.logo img { width: 70%; height: 70%; object-fit: contain; }
+.sl-text { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.sl-text strong { color: var(--title); font-size: 16px; font-weight: 600; }
+.sl-text small { overflow: hidden; color: var(--muted); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.sl-count {
+  flex: none;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-size: 12px;
+  font-weight: 600;
+}
+.sl-chev { flex: none; color: var(--muted); transition: transform .2s; }
+.sl-row[open] .sl-chev { transform: rotate(180deg); }
+.sl-body { padding: 4px 16px 14px 74px; border-top: 1px solid var(--card-border); }
+.sl-course { margin: 12px 0 2px; font-size: 14px; font-weight: 600; }
+.sl-course a { color: var(--title); }
+.sl-course a:hover { color: var(--brand); }
+.sl-lessons { margin: 6px 0 0; padding: 0; list-style: none; columns: 2 300px; column-gap: 28px; }
+.sl-lessons li { break-inside: avoid; }
+.sl-lessons a { display: flex; gap: 10px; padding: 5px 0; color: var(--text); font-size: 14px; line-height: 1.4; }
+.sl-lessons a:hover { color: var(--brand); }
+.sl-lessons b { flex: none; min-width: 22px; color: var(--brand); font-weight: 600; }
+.sl-lessons small { color: var(--muted); }
+.sl-none { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+.sl-open { display: inline-block; margin-top: 10px; color: var(--brand); font-size: 14px; font-weight: 600; }
+@media (max-width: 600px) {
+  .sl-body { padding-left: 16px; }
+  .sl-text small { white-space: normal; }
+}

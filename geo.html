@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Geo (Ground) · KCE</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles: same as the home page, plus lesson.css -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/widgets.css">
+  <link rel="stylesheet" href="css/lesson.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ===== Left sidebar ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true">
+          <rect width="28" height="4" rx="2"/><rect y="9" width="22" height="4" rx="2"/><rect y="18" width="28" height="4" rx="2"/>
+        </svg>
+        KCE
+      </div>
+      <!-- Menu links are built from js/data.js -->
+      <nav class="nav" id="nav"></nav>
+    </aside>
+
+    <!-- ===== Main content ===== -->
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">☰</button>
+        <label class="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+          </svg>
+          <input type="search" id="search" placeholder="Search lessons..." aria-label="Search lessons">
+        </label>
+        <div class="top-actions">
+          <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Geo (Ground): two courses -->
+      <section class="section geo-hub">
+        <div class="section-head">
+          <h2>Geo (Ground)</h2>
+        </div>
+        <p class="geo-intro">Two courses translated from the CCES notes of SIENG Peou (Institute of Technology of Cambodia): the behaviour of soil, then the design of foundations on it.</p>
+        <div class="cards">
+          <a class="card" href="soil-mechanics.html">
+            <div class="thumb has-photo" style="background: var(--card-pink)"><img class="photo" src="images/cards/v2/geo.jpg" alt=""></div>
+            <div class="card-body">
+              <div class="card-text">
+                <h3>Soil Mechanics</h3>
+                <p>Grain size, phase relations, limits, classification, compaction, shear strength, stresses and consolidation — 10 lessons</p>
+              </div>
+              <span class="card-go" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </a>
+          <a class="card" href="foundation.html">
+            <div class="thumb has-photo" style="background: var(--card-peach)"><img class="photo" src="images/cards/v2/foundation.svg" alt=""></div>
+            <div class="card-body">
+              <div class="card-text">
+                <h3>Foundation Engineering</h3>
+                <p>Bearing capacity, footings, settlement, piles, retaining walls and slope stability — 11 lessons</p>
+              </div>
+              <span class="card-go" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Scripts: data first, then the code that uses it -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

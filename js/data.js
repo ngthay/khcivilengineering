@@ -66,7 +66,7 @@ window.KCE_DATA = {
     { category: "structural", title: "Design",       desc: "Loads, combinations and design checks",      icon: "📐", color: "blue",  href: "design.html", image: "images/cards/v2/design.jpg" },
     { category: "structural", title: "Concrete",     desc: "Reinforced concrete beams, columns, slabs",  icon: "🧱", color: "peach", href: "concrete.html", image: "images/cards/v2/concrete.jpg" },
     { category: "structural", title: "Steel",        desc: "Members, connections and buckling",          icon: "🏗️", color: "lilac", href: "steel.html", image: "images/cards/v2/steel.jpg" },
-    { category: "structural", title: "Geo (Ground)", desc: "Soil mechanics, foundations, consolidation", icon: "⛰️", color: "pink",  href: "geo.html", image: "images/cards/v2/geo.jpg" },
+    { category: "structural", title: "Geo (Ground)", desc: "Soil mechanics and foundation engineering", icon: "⛰️", color: "pink",  href: "geo.html", image: "images/cards/v2/geo.jpg", pages: ["soil-mechanics.html", "foundation.html"] },
 
     // Computing
     { category: "computing", title: "AI (Artificial Intelligence)", desc: "Machine learning for engineering",   icon: "🤖", color: "mag", href: "ai.html", image: "images/cards/ai.jpg" },

@@ -6,7 +6,8 @@
    ========================================================= */
 
 (function () {
-  const { folders, books } = window.KCE_BOOKS;
+  const { folders } = window.KCE_BOOKS;
+  let books = window.KCE_BOOKS.books;
   const folderById = Object.fromEntries(folders.map((f) => [f.id, f]));
   const DEFAULT_FOLDER = { id: '', label: 'Other', icon: '📚', color: 'blue' };
 
@@ -145,4 +146,13 @@
 
   renderShelves();
   renderBooks();
+
+  // Online, drop books whose file is not published, then redraw
+  window.kceAvailableBooks().then((found) => {
+    if (found.length === books.length) return;
+    books = found;
+    if (activeShelf !== 'all' && !books.some((b) => b.folder === activeShelf)) activeShelf = 'all';
+    renderShelves();
+    renderBooks();
+  });
 })();

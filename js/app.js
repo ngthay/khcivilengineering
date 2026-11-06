@@ -28,7 +28,8 @@
   function renderSidebar() {
     // Highlight the link for the page we are on
     const page = location.pathname.split('/').pop() || 'index.html';
-    const active = (href) => (href === page ? ' class="active"' : '');
+    // `pages` lists extra pages that belong to the same menu item (e.g. the Geo courses)
+    const active = (href, pages = []) => (href === page || pages.includes(page) ? ' class="active"' : '');
 
     // Menu icon: company logo on a white tile, else a small square copy of the
     // card picture (images/cards/thumbs/), else the emoji
@@ -45,7 +46,7 @@
           : logo ? icoHTML('logo', logo, s.icon)
           : s.image ? icoHTML('photo', thumb(s.image), s.icon)
           : `<span class="ico">${s.icon}</span>`;
-        html += `<a href="${s.href}"${active(s.href)}>${ico}${s.title}</a>`;
+        html += `<a href="${s.href}"${active(s.href, s.pages)}>${ico}${s.title}</a>`;
       });
     });
     document.getElementById('nav').innerHTML = html;
@@ -82,24 +83,97 @@
       </a>`;
   }
 
+  /* "View All" list: one row per subject, its lessons inside */
+  const pad2 = (n) => String(n).padStart(2, '0');
+
+  function lessonsOf(s) {
+    // Course pages of a subject: its own page and any extra pages (Geo)
+    const lessons = window.KCE_LESSONS || {};
+    return [s.href, ...(s.pages || [])].filter((p) => lessons[p]).map((p) => ({ page: p, ...lessons[p] }));
+  }
+
+  function listRowHTML(s) {
+    const thumbSrc = s.logo || (s.image && s.image.replace('images/cards/', 'images/cards/thumbs/'));
+    const ico = thumbSrc
+      ? `<span class="sl-ico${s.logo ? ' logo' : ''}"><img src="${thumbSrc}" alt="" data-fallback="${s.icon}"></span>`
+      : `<span class="sl-ico">${s.icon}</span>`;
+    let count, body;
+    if (s.href === 'library.html') {
+      const books = (window.KCE_BOOKS && window.KCE_BOOKS.books) || [];
+      count = `${books.length} book${books.length === 1 ? '' : 's'}`;
+      body = books.length
+        ? `<ol class="sl-lessons">${books.map((b) => `<li><a href="${b.file}" target="_blank" rel="noopener"><b>📄</b>${b.title}${b.author ? ` <small>— ${b.author}</small>` : ''}</a></li>`).join('')}</ol>`
+        : '<p class="sl-none">No books yet.</p>';
+    } else {
+      const courses = lessonsOf(s);
+      const n = courses.reduce((t, c) => t + c.lessons.length, 0);
+      count = n ? `${n} lesson${n === 1 ? '' : 's'}` : 'Coming soon';
+      body = courses.length ? courses.map((c) => `
+        ${courses.length > 1 ? `<h4 class="sl-course"><a href="${c.page}">${c.title}</a></h4>` : ''}
+        <ol class="sl-lessons">${c.lessons.map(([id, num, title]) =>
+          `<li><a href="${c.page}?lesson=${id}"><b>${pad2(num)}</b>${title}</a></li>`).join('')}</ol>`).join('')
+        : '<p class="sl-none">Lessons for this subject are coming soon.</p>';
+    }
+    return `
+      <details class="sl-row" data-href="${s.href}">
+        <summary>
+          ${ico}
+          <span class="sl-text"><strong>${s.title}</strong><small>${s.desc}</small></span>
+          <span class="sl-count">${count}</span>
+          <svg class="sl-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="sl-body">
+          ${body}
+          <a class="sl-open" href="${s.href}">Open ${s.title} →</a>
+        </div>
+      </details>`;
+  }
+
   function renderSections() {
     const html = sections.map((sec) => {
       const items = byCategory(sec.categories);
       // Sort to follow the order of sec.categories, not the order in the subjects list
       items.sort((a, b) => sec.categories.indexOf(a.category) - sec.categories.indexOf(b.category));
-      const viewAll = items.length ? items[0].href : '#';
       return `
         <section class="section" data-group="${sec.id}">
           <div class="section-head">
             <h2>${sec.title}</h2>
-            <a class="view-all" href="${viewAll}">View All
+            <button type="button" class="view-all" aria-expanded="false"><span>View All</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-            </a>
+            </button>
           </div>
           <div class="cards">${items.map(cardHTML).join('')}</div>
+          <div class="subject-list">${items.map(listRowHTML).join('')}</div>
         </section>`;
     }).join('');
     document.getElementById('sections').innerHTML = html;
+
+    // "View All" switches a section between cards and the list of subjects and lessons
+    document.querySelectorAll('.section .view-all').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const sec = btn.closest('.section');
+        const open = sec.classList.toggle('as-list');
+        btn.setAttribute('aria-expanded', open);
+        btn.querySelector('span').textContent = open ? 'Show Cards' : 'View All';
+      });
+    });
+
+    // Online, drop unpublished books from the Library row
+    if (window.kceAvailableBooks) {
+      window.kceAvailableBooks().then((found) => {
+        const row = document.querySelector('.sl-row[data-href="library.html"]');
+        if (!row || found.length === window.KCE_BOOKS.books.length) return;
+        const files = new Set(found.map((b) => b.file));
+        row.querySelectorAll('.sl-lessons a').forEach((a) => { if (!files.has(a.getAttribute('href'))) a.parentElement.remove(); });
+        row.querySelector('.sl-count').textContent = `${found.length} book${found.length === 1 ? '' : 's'}`;
+        if (!found.length) row.querySelector('.sl-lessons').outerHTML = '<p class="sl-none">No books yet.</p>';
+      });
+    }
+
+    // Swap in the emoji when a list icon file is missing
+    document.querySelectorAll('.sl-ico img').forEach((img) => {
+      img.addEventListener('error', () => img.replaceWith(img.dataset.fallback));
+    });
 
     // Swap in the emoji when a logo image file is missing
     document.querySelectorAll('.logo-tile img').forEach((img) => {
@@ -163,6 +237,14 @@
         visited.add(card.getAttribute('href'));
         save('visited', [...visited]);
         updateProgress();
+      });
+    });
+    // Opening a lesson from a "View All" list counts as visiting the subject
+    document.querySelectorAll('.sl-row').forEach((row) => {
+      row.querySelector('.sl-body').addEventListener('click', (e) => {
+        if (!e.target.closest('a')) return;
+        visited.add(row.dataset.href);
+        save('visited', [...visited]);
       });
     });
 
